@@ -1,0 +1,17 @@
+{
+  "cxxNamespace": ["nitrotor"],
+  "ios": {
+    "iosModuleName": "NitroTor"
+  },
+  "android": {
+    "androidNamespace": ["nitrotor"],
+    "androidCxxLibName": "nitrotor"
+  },
+  "autolinking": {
+    "NitroTor": {
+      "swift": "NitroTor",
+      "kotlin": "NitroTor"
+    }
+  },
+  "ignorePaths": ["node_modules"]
+}
