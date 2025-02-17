@@ -3,11 +3,11 @@
 #include "HybridMathSpec.hpp"
 
 namespace margelo::nitro::nitrotor {
-class HybridMath : public HybridMathSpec {
-   public:
+  class HybridMath : public HybridMathSpec {
+  public:
     HybridMath() : HybridObject(TAG) {}
 
-   public:
+  public:
     double add(double a, double b) override;
-};
-};  // namespace margelo::nitro::nitrotor
+  };
+}; // namespace margelo::nitro::nitrotor
