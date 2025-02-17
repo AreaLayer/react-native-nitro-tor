@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => "16.6" }
   s.source       = { :git => "https://github.com/niteshbalusu11/react-native-nitro-tor.git", :tag => "#{s.version}" }
 
-  s.source_files = "ios/**/*.{h,m,mm,swift}"
+  s.source_files = "cpp/**/*.{h,hpp,cpp,c}"
 
   load 'nitrogen/generated/ios/NitroTor+autolinking.rb'
   add_nitrogen_files(s)

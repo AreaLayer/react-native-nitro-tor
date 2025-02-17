@@ -5,12 +5,11 @@
   },
   "android": {
     "androidNamespace": ["nitrotor"],
-    "androidCxxLibName": "nitrotor"
+    "androidCxxLibName": "NitroTor"
   },
   "autolinking": {
     "NitroTor": {
-      "swift": "NitroTor",
-      "kotlin": "NitroTor"
+      "cpp": "NitroTor"
     }
   },
   "ignorePaths": ["node_modules"]
