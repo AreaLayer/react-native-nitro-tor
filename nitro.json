@@ -8,8 +8,8 @@
     "androidCxxLibName": "NitroTor"
   },
   "autolinking": {
-    "NitroTor": {
-      "cpp": "NitroTor"
+    "Math": {
+      "cpp": "HybridMath"
     }
   },
   "ignorePaths": ["node_modules"]

@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet } from 'react-native';
-import { multiply } from 'react-native-nitro-tor';
+import { RnMath } from 'react-native-nitro-tor';
 
-const result = multiply(3, 7);
+const result = RnMath.add(3, 7);
 
 export default function App() {
   return (
