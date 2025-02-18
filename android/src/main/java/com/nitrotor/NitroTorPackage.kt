@@ -18,6 +18,7 @@ class NitroTorPackage : TurboReactPackage() {
 
     companion object {
         init {
+            System.loadLibrary("tor")
             System.loadLibrary("NitroTor")
         }
     }

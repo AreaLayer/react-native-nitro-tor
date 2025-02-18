@@ -18,7 +18,7 @@ endif()
 # Create the main library
 add_library(${PROJECT_NAME}
     SHARED
-    ${CPP_DIR}/HybridTor.cpp
+    # ${CPP_DIR}/HybridTor.cpp
     ${CPP_DIR}/HybridMath.cpp
     ${ANDROID_DIR}/src/main/cpp/cpp-adapter.cpp
 )

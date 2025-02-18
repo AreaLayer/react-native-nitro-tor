@@ -10,9 +10,6 @@
   "autolinking": {
     "Math": {
       "cpp": "HybridMath"
-    },
-    "Tor": {
-      "cpp": "HybridTor"
     }
   },
   "ignorePaths": ["node_modules"]

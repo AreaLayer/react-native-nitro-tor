@@ -28,6 +28,7 @@
           config = {
             allowUnfree = true;
             android_sdk.accept_license = true;
+            platform = if system == "aarch64-darwin" then "aarch64-darwin" else "x86_64-darwin";
           };
         };
 
