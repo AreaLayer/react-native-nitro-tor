@@ -5,6 +5,8 @@
 #include <sstream>
 #include <vector>
 
+#include "log.h"
+
 namespace margelo::nitro::nitrotor {
 
   HybridTor::HybridTor() // **Corrected Constructor: Call HybridObject(TAG) directly**
@@ -31,6 +33,8 @@ namespace margelo::nitro::nitrotor {
   double
   HybridTor::createTorService(const std::string &dataDir, double socksPort,
                               double bootstrapTimeoutMs) { // Signature matches HybridTorSpec.hpp
+    NITROTOR_LOG_INFO("createTorService");
+
     uint16_t socksPort_u16 = static_cast<uint16_t>(socksPort);
     uint64_t bootstrapTimeoutMs_u64 = static_cast<uint64_t>(bootstrapTimeoutMs);
 
