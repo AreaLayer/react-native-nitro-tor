@@ -27,5 +27,9 @@
     "editor.defaultFormatter": "ms-vscode.cpptools"
   },
   // C++ formatting settings
-  "C_Cpp.clang_format_style": "{NamespaceIndentation: All, ColumnLimit: 100, UseTab: Never, BreakBeforeBraces: Attach}"
+  "C_Cpp.clang_format_style": "{NamespaceIndentation: All, ColumnLimit: 100, UseTab: Never, BreakBeforeBraces: Attach}",
+  "files.associations": {
+    "stdexcept": "cpp"
+  },
+  "cmake.sourceDirectory": "/Users/niteshchowdharybalusu/Documents/react-native-nitro-tor/android"
 }
