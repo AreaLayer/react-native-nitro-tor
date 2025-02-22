@@ -7,7 +7,7 @@ namespace margelo::nitro::nitrotor {
 
   class HybridTor : public HybridTorSpec {
   public:
-    HybridTor() : HybridTorSpec() {}
+    HybridTor() : HybridObject(TAG) {}
 
     std::shared_ptr<Promise<bool>> initTorService(const TorConfig &config) override {
       return Promise<bool>::async([config]() {
