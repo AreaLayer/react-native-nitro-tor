@@ -154,6 +154,8 @@ namespace rust {
 
 namespace tor {
   extern "C" {
+  bool tor$cxxbridge1$initialize_tor_library() noexcept;
+
   bool tor$cxxbridge1$init_tor_service(::std::uint16_t socks_port, ::rust::Str data_dir,
                                        ::std::uint64_t timeout_ms) noexcept;
 
@@ -167,6 +169,8 @@ namespace tor {
 
   bool tor$cxxbridge1$shutdown_service() noexcept;
   } // extern "C"
+
+  bool initialize_tor_library() noexcept { return tor$cxxbridge1$initialize_tor_library(); }
 
   bool init_tor_service(::std::uint16_t socks_port, ::rust::Str data_dir,
                         ::std::uint64_t timeout_ms) noexcept {

@@ -134,6 +134,8 @@ namespace rust {
 } // namespace rust
 
 namespace tor {
+  bool initialize_tor_library() noexcept;
+
   bool init_tor_service(::std::uint16_t socks_port, ::rust::Str data_dir,
                         ::std::uint64_t timeout_ms) noexcept;
 
