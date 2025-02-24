@@ -1,9 +1,9 @@
-const path = require('path');
-const { getDefaultConfig } = require('@react-native/metro-config');
-const { getConfig } = require('react-native-builder-bob/metro-config');
-const pkg = require('../package.json');
+const path = require("path");
+const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config");
+const { getConfig } = require("react-native-builder-bob/metro-config");
+const pkg = require("../package.json");
 
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(__dirname, "..");
 
 /**
  * Metro configuration
@@ -11,7 +11,14 @@ const root = path.resolve(__dirname, '..');
  *
  * @type {import('metro-config').MetroConfig}
  */
-module.exports = getConfig(getDefaultConfig(__dirname), {
+
+const config = {
+  resolver: {
+    unstable_enablePackageExports: true,
+  },
+};
+
+module.exports = getConfig(mergeConfig(getDefaultConfig(__dirname), config), {
   root,
   pkg,
   project: __dirname,

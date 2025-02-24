@@ -97,7 +97,8 @@
     "unordered_set": "cpp",
     "variant": "cpp",
     "vector": "cpp",
-    "algorithm": "cpp"
+    "algorithm": "cpp",
+    "source_location": "cpp"
   },
   "cmake.sourceDirectory": "${workspaceFolder}/android"
 }

@@ -15,12 +15,38 @@ export interface HiddenServiceParams {
   key_data?: ByteArray64; // Optional key data
 }
 
+export interface StartTorParams {
+  data_dir: string;
+  key_data?: ByteArray64;
+  socks_port: number;
+  target_port: number;
+  timeout_ms: number;
+}
+
+export interface StartTorResponse {
+  is_success: boolean;
+  onion_address: string;
+  control: string;
+  error_message: string;
+}
+
+export interface HiddenServiceResponse {
+  is_success: boolean;
+  onion_address: string;
+  control: string;
+}
+
 export interface Tor extends HybridObject<{ ios: 'c++'; android: 'c++' }> {
   // Initialize the Tor service
   initTorService(config: TorConfig): Promise<boolean>;
 
   // Create a new hidden service
-  createHiddenService(params: HiddenServiceParams): Promise<string>;
+  createHiddenService(
+    params: HiddenServiceParams
+  ): Promise<HiddenServiceResponse>;
+
+  // Start the Tor daemon with hidden service and control port
+  startTorIfNotRunning(params: StartTorParams): Promise<StartTorResponse>;
 
   // Get the current service status
   getServiceStatus(): Promise<number>;

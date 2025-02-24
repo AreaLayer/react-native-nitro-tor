@@ -2,6 +2,7 @@
 #include <array>
 #include <cstdint>
 #include <string>
+#include <type_traits>
 
 namespace rust {
   inline namespace cxxbridge1 {
@@ -134,14 +135,48 @@ namespace rust {
 } // namespace rust
 
 namespace tor {
+  struct HiddenServiceResponse;
+  struct StartTorResponse;
+} // namespace tor
+
+namespace tor {
+#ifndef CXXBRIDGE1_STRUCT_tor$HiddenServiceResponse
+#define CXXBRIDGE1_STRUCT_tor$HiddenServiceResponse
+  struct HiddenServiceResponse final {
+    bool is_success;
+    ::rust::String onion_address;
+    ::rust::String control;
+
+    using IsRelocatable = ::std::true_type;
+  };
+#endif // CXXBRIDGE1_STRUCT_tor$HiddenServiceResponse
+
+#ifndef CXXBRIDGE1_STRUCT_tor$StartTorResponse
+#define CXXBRIDGE1_STRUCT_tor$StartTorResponse
+  struct StartTorResponse final {
+    bool is_success;
+    ::rust::String onion_address;
+    ::rust::String control;
+    ::rust::String error_message;
+
+    using IsRelocatable = ::std::true_type;
+  };
+#endif // CXXBRIDGE1_STRUCT_tor$StartTorResponse
+
   bool initialize_tor_library() noexcept;
 
   bool init_tor_service(::std::uint16_t socks_port, ::rust::Str data_dir,
                         ::std::uint64_t timeout_ms) noexcept;
 
-  ::rust::String create_hidden_service(::std::uint16_t port, ::std::uint16_t target_port,
-                                       ::std::array<::std::uint8_t, 64> const &key_data,
-                                       bool has_key) noexcept;
+  ::tor::HiddenServiceResponse
+  create_hidden_service(::std::uint16_t port, ::std::uint16_t target_port,
+                        ::std::array<::std::uint8_t, 64> const &key_data, bool has_key) noexcept;
+
+  ::tor::StartTorResponse start_tor_if_not_running(::rust::Str data_dir,
+                                                   ::std::array<::std::uint8_t, 64> const &key_data,
+                                                   bool has_key, ::std::uint16_t socks_port,
+                                                   ::std::uint16_t target_port,
+                                                   ::std::uint64_t timeout_ms) noexcept;
 
   ::std::int32_t get_service_status() noexcept;
 

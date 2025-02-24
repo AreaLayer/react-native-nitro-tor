@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <new>
 #include <string>
+#include <type_traits>
 #include <utility>
 
 namespace rust {
@@ -153,6 +154,34 @@ namespace rust {
 } // namespace rust
 
 namespace tor {
+  struct HiddenServiceResponse;
+  struct StartTorResponse;
+} // namespace tor
+
+namespace tor {
+#ifndef CXXBRIDGE1_STRUCT_tor$HiddenServiceResponse
+#define CXXBRIDGE1_STRUCT_tor$HiddenServiceResponse
+  struct HiddenServiceResponse final {
+    bool is_success;
+    ::rust::String onion_address;
+    ::rust::String control;
+
+    using IsRelocatable = ::std::true_type;
+  };
+#endif // CXXBRIDGE1_STRUCT_tor$HiddenServiceResponse
+
+#ifndef CXXBRIDGE1_STRUCT_tor$StartTorResponse
+#define CXXBRIDGE1_STRUCT_tor$StartTorResponse
+  struct StartTorResponse final {
+    bool is_success;
+    ::rust::String onion_address;
+    ::rust::String control;
+    ::rust::String error_message;
+
+    using IsRelocatable = ::std::true_type;
+  };
+#endif // CXXBRIDGE1_STRUCT_tor$StartTorResponse
+
   extern "C" {
   bool tor$cxxbridge1$initialize_tor_library() noexcept;
 
@@ -161,7 +190,15 @@ namespace tor {
 
   void tor$cxxbridge1$create_hidden_service(::std::uint16_t port, ::std::uint16_t target_port,
                                             ::std::array<::std::uint8_t, 64> const &key_data,
-                                            bool has_key, ::rust::String *return$) noexcept;
+                                            bool has_key,
+                                            ::tor::HiddenServiceResponse *return$) noexcept;
+
+  void tor$cxxbridge1$start_tor_if_not_running(::rust::Str data_dir,
+                                               ::std::array<::std::uint8_t, 64> const &key_data,
+                                               bool has_key, ::std::uint16_t socks_port,
+                                               ::std::uint16_t target_port,
+                                               ::std::uint64_t timeout_ms,
+                                               ::tor::StartTorResponse *return$) noexcept;
 
   ::std::int32_t tor$cxxbridge1$get_service_status() noexcept;
 
@@ -177,11 +214,22 @@ namespace tor {
     return tor$cxxbridge1$init_tor_service(socks_port, data_dir, timeout_ms);
   }
 
-  ::rust::String create_hidden_service(::std::uint16_t port, ::std::uint16_t target_port,
-                                       ::std::array<::std::uint8_t, 64> const &key_data,
-                                       bool has_key) noexcept {
-    ::rust::MaybeUninit<::rust::String> return$;
+  ::tor::HiddenServiceResponse
+  create_hidden_service(::std::uint16_t port, ::std::uint16_t target_port,
+                        ::std::array<::std::uint8_t, 64> const &key_data, bool has_key) noexcept {
+    ::rust::MaybeUninit<::tor::HiddenServiceResponse> return$;
     tor$cxxbridge1$create_hidden_service(port, target_port, key_data, has_key, &return$.value);
+    return ::std::move(return$.value);
+  }
+
+  ::tor::StartTorResponse start_tor_if_not_running(::rust::Str data_dir,
+                                                   ::std::array<::std::uint8_t, 64> const &key_data,
+                                                   bool has_key, ::std::uint16_t socks_port,
+                                                   ::std::uint16_t target_port,
+                                                   ::std::uint64_t timeout_ms) noexcept {
+    ::rust::MaybeUninit<::tor::StartTorResponse> return$;
+    tor$cxxbridge1$start_tor_if_not_running(data_dir, key_data, has_key, socks_port, target_port,
+                                            timeout_ms, &return$.value);
     return ::std::move(return$.value);
   }
 
