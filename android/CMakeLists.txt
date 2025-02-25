@@ -22,7 +22,6 @@ message(STATUS "Using libraries from: ${LIBS_DIR}")
 add_library(${PROJECT_NAME}
     SHARED
     ${CPP_DIR}/lib.rs.cc
-    ${CPP_DIR}/HybridMath.cpp
     ${CPP_DIR}/glob_impl.cpp
     ${ANDROID_DIR}/src/main/cpp/cpp-adapter.cpp
 )

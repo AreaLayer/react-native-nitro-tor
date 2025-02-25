@@ -8,9 +8,6 @@
     "androidCxxLibName": "NitroTor"
   },
   "autolinking": {
-    "Math": {
-      "cpp": "HybridMath"
-    },
     "Tor": {
       "cpp": "HybridTor"
     }

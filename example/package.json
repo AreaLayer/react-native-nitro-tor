@@ -15,7 +15,7 @@
     "@dr.pogodin/react-native-fs": "^2.32.0",
     "react": "18.3.1",
     "react-native": "0.77.1",
-    "react-native-nitro-modules": "^0.22.1",
+    "react-native-nitro-modules": "^0.24.1",
     "react-native-turbo-lnd": "github:hsjoberg/react-native-turbo-lnd.git#blixt-integration"
   },
   "devDependencies": {
