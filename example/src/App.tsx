@@ -129,25 +129,29 @@ export default function TorApp() {
             lnddir = RNFS.LibraryDirectoryPath + '/Application Support/lnd/';
           }
 
-          await start(
-            `--lnddir="${lnddir}"
-              --noseedbackup
-              --listen=localhost
-              --bitcoin.active
-              --bitcoin.mainnet
-              --bitcoin.node=neutrino
-              --feeurl="https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json"
-              --routing.assumechanvalid
-              --tlsdisableautofill
-              --db.bolt.auto-compact
-              --db.bolt.auto-compact-min-age=0
-              --neutrino.connect=neutrino.noderunner.wtf:8333
-              --tor.active
-              --tor.v3
-              --tor.socks=127.0.0.1:9050
-              --tor.control=${torState.controlUrl}
-              `
-          );
+          try {
+            await start(
+              `--lnddir="${lnddir}"
+                --noseedbackup
+                --listen=localhost
+                --bitcoin.active
+                --bitcoin.mainnet
+                --bitcoin.node=neutrino
+                --feeurl="https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json"
+                --routing.assumechanvalid
+                --tlsdisableautofill
+                --db.bolt.auto-compact
+                --db.bolt.auto-compact-min-age=0
+                --neutrino.connect=neutrino.noderunner.wtf:8333
+                --tor.active
+                --tor.v3
+                --tor.socks=127.0.0.1:9050
+                --tor.control=${torState.controlUrl}
+                `
+            );
+          } catch (err) {
+            console.error(err);
+          }
         }}
       />
 

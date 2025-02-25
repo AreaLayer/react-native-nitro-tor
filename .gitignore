@@ -80,7 +80,6 @@ lib/
 ios/generated
 android/generated
 
-# React Native Nitro Modules
-nitrogen/
-
 .direnv/
+
+./example/ios/Tor.xcframework
