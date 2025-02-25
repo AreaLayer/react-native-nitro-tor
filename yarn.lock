@@ -10651,7 +10651,6 @@ __metadata:
     react-native: 0.77.1
     react-native-builder-bob: ^0.37.0
     react-native-nitro-modules: ^0.24.1
-    react-native-turbo-lnd: "github:hsjoberg/react-native-turbo-lnd.git#blixt-integration"
   languageName: unknown
   linkType: soft
 
@@ -10686,20 +10685,6 @@ __metadata:
     react-native-nitro-modules: ^0.24.1
   languageName: unknown
   linkType: soft
-
-"react-native-turbo-lnd@github:hsjoberg/react-native-turbo-lnd.git#blixt-integration":
-  version: 0.1.2
-  resolution: "react-native-turbo-lnd@https://github.com/hsjoberg/react-native-turbo-lnd.git#commit=f9c563aeefe06e789940331045e7fcbc4a194870"
-  peerDependencies:
-    "@bufbuild/protobuf": "*"
-    react: "*"
-    react-native: "*"
-  peerDependenciesMeta:
-    "@bufbuild/protobuf":
-      optional: true
-  checksum: 6bfaaf7b5e73ee38612ce84a58bd873e9c5c2502019fb7c666f3b18784939413a201720fb399bb58286d165cb9990e41af8ec0781706d9ffc9e8d8d15ddc0485
-  languageName: node
-  linkType: hard
 
 "react-native@npm:0.77.1":
   version: 0.77.1

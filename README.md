@@ -7,7 +7,7 @@ A Tor Daemon and Onion Routing Client for React Native using pure C++ [NitroModu
 - Run a Tor daemon directly in your React Native application
 - Create and manage Tor hidden services
 - Built with performance in mind using React Native's NitroModules
-- Cross-platform support for iOS and macOS
+- Cross-platform support for Android, iOS and macOS
 
 ## Installation
 
@@ -179,6 +179,32 @@ interface HiddenServiceResponse {
 ## Architecture Support
 
 - Android: arm64-v8a, x86_64, x86
+
+## Running the example app
+
+```
+# Install dependencies
+yarn install
+
+# Generate native interfaces
+yarn nitrogen
+
+# Start metro
+yarn example start
+
+# For android
+yarn example android
+
+# For ios
+yarn example ios
+
+# IF ABOVE STEP FOR IOS THROWS ERRORS, you can also try:
+cd example/ios && pod install
+
+- Open the NitroTorExample.xcworkspace inside of xcode.
+- Drag the Tor.xcframework from the root of the project to xcode project and select the "Copy files to destination" option.
+- Build and run from inside of xcode.
+```
 
 ## License
 
