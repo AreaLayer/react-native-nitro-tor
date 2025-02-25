@@ -35,6 +35,7 @@ namespace margelo::nitro::nitrotor {
     std::string error_message     SWIFT_PRIVATE;
 
   public:
+    StartTorResponse() = default;
     explicit StartTorResponse(bool is_success, std::string onion_address, std::string control, std::string error_message): is_success(is_success), onion_address(onion_address), control(control), error_message(error_message) {}
   };
 

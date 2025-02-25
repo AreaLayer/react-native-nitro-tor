@@ -34,6 +34,7 @@ namespace margelo::nitro::nitrotor {
     std::string control     SWIFT_PRIVATE;
 
   public:
+    HiddenServiceResponse() = default;
     explicit HiddenServiceResponse(bool is_success, std::string onion_address, std::string control): is_success(is_success), onion_address(onion_address), control(control) {}
   };
 

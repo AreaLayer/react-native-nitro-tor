@@ -35,6 +35,7 @@ namespace margelo::nitro::nitrotor {
     std::optional<std::vector<double>> key_data     SWIFT_PRIVATE;
 
   public:
+    HiddenServiceParams() = default;
     explicit HiddenServiceParams(double port, double target_port, std::optional<std::vector<double>> key_data): port(port), target_port(target_port), key_data(key_data) {}
   };
 

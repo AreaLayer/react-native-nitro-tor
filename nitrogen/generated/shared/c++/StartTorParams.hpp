@@ -38,6 +38,7 @@ namespace margelo::nitro::nitrotor {
     double timeout_ms     SWIFT_PRIVATE;
 
   public:
+    StartTorParams() = default;
     explicit StartTorParams(std::string data_dir, std::optional<std::vector<double>> key_data, double socks_port, double target_port, double timeout_ms): data_dir(data_dir), key_data(key_data), socks_port(socks_port), target_port(target_port), timeout_ms(timeout_ms) {}
   };
 
