@@ -40,12 +40,12 @@ yarn add react-native-nitro-modules
 ### Basic Example
 
 ```typescript
-import { TorModule } from 'react-native-nitro-tor';
+import { RnTor } from 'react-native-nitro-tor';
 
 // Start Tor with a hidden service
 const startTor = async () => {
   try {
-    const result = await TorModule.startTorIfNotRunning({
+    const result = await RnTor.startTorIfNotRunning({
       data_dir: '/path/to/tor/data',
       socks_port: 9050,
       target_port: 8080,
@@ -68,11 +68,10 @@ const startTor = async () => {
 ### Advanced Usage
 
 ```typescript
-import { TorModule } from 'react-native-nitro-tor';
-
+import { RnTor } from 'react-native-nitro-tor';
 // Initialize Tor service
 const initTor = async () => {
-  const initialized = await TorModule.initTorService({
+  const initialized = await RnTor.initTorService({
     socks_port: 9050,
     data_dir: '/path/to/tor/data',
     timeout_ms: 60000,
@@ -87,7 +86,7 @@ const initTor = async () => {
 
 // Create a hidden service
 const createService = async () => {
-  const serviceResult = await TorModule.createHiddenService({
+  const serviceResult = await RnTor.createHiddenService({
     port: 80,
     target_port: 8080,
     // Optionally provide key_data for persistent services
@@ -100,13 +99,13 @@ const createService = async () => {
 
 // Check service status
 const checkStatus = async () => {
-  const status = await TorModule.getServiceStatus();
+  const status = await RnTor.getServiceStatus();
   console.log(`Current Tor service status: ${status}`);
 };
 
 // Shutdown Tor service
 const shutdown = async () => {
-  const result = await TorModule.shutdownService();
+  const result = await RnTor.shutdownService();
   console.log(`Tor shutdown ${result ? 'successful' : 'failed'}`);
 };
 ```
