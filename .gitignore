@@ -82,4 +82,5 @@ android/generated
 
 .direnv/
 
-./example/ios/Tor.xcframework
+example/ios/Tor.xcframework
+example/ios/liblnd.a
