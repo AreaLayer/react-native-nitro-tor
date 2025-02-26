@@ -39,7 +39,6 @@
     "!**/.*"
   ],
   "scripts": {
-    "commit": "commit",
     "example": "yarn workspace react-native-nitro-tor-example",
     "test": "jest",
     "typecheck": "tsc",
