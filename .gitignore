@@ -85,3 +85,4 @@ nitrogen
 
 example/ios/Tor.xcframework
 example/ios/liblnd.a
+.husky/
