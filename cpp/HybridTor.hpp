@@ -1,6 +1,7 @@
 #pragma once
 #include "HybridTorSpec.hpp"
-#include "lib.rs.h"
+#include "tor_ffi.h"
+#include <cstring> // For std::memcpy
 #include <memory>
 
 namespace margelo::nitro::nitrotor {
@@ -14,10 +15,9 @@ namespace margelo::nitro::nitrotor {
         if (!tor::initialize_tor_library()) {
           return false; // Failed to initialize library
         }
-
         // Then proceed with service initialization
         return tor::init_tor_service(static_cast<uint16_t>(config.socks_port),
-                                     rust::Str(config.data_dir),
+                                     config.data_dir.c_str(),
                                      static_cast<uint64_t>(config.timeout_ms));
       });
     }
@@ -25,43 +25,74 @@ namespace margelo::nitro::nitrotor {
     std::shared_ptr<Promise<HiddenServiceResponse>>
     createHiddenService(const HiddenServiceParams &params) override {
       return Promise<HiddenServiceResponse>::async([params]() {
+        // Create a C array of bytes from the vector
+        const uint8_t *key_data_ptr = nullptr;
         std::array<uint8_t, 64> key_data{};
         bool has_key = params.key_data.has_value();
+
         if (has_key) {
           const auto &key_vec = params.key_data.value();
           for (size_t i = 0; i < 64 && i < key_vec.size(); i++) {
             key_data[i] = static_cast<uint8_t>(key_vec[i]);
           }
+          key_data_ptr = key_data.data();
         }
+
+        // Call the FFI function
         auto result = tor::create_hidden_service(static_cast<uint16_t>(params.port),
                                                  static_cast<uint16_t>(params.target_port),
-                                                 key_data, has_key);
+                                                 key_data_ptr, has_key);
 
-        return HiddenServiceResponse(result.is_success, std::string(result.onion_address.c_str()),
-                                     std::string(result.control.c_str()));
+        // Create our response object and copy the strings
+        std::string onion_address = result.onion_address ? result.onion_address : "";
+        std::string control = result.control ? result.control : "";
+
+        // Important: Free the C strings to avoid memory leaks
+        if (result.onion_address)
+          tor::free_string(result.onion_address);
+        if (result.control)
+          tor::free_string(result.control);
+
+        return HiddenServiceResponse(result.is_success, onion_address, control);
       });
     }
 
     std::shared_ptr<Promise<StartTorResponse>>
     startTorIfNotRunning(const StartTorParams &params) override {
       return Promise<StartTorResponse>::async([params]() {
+        // Create a C array of bytes from the vector
+        const uint8_t *key_data_ptr = nullptr;
         std::array<uint8_t, 64> key_data{};
         bool has_key = params.key_data.has_value();
+
         if (has_key) {
           const auto &key_vec = params.key_data.value();
           for (size_t i = 0; i < 64 && i < key_vec.size(); i++) {
             key_data[i] = static_cast<uint8_t>(key_vec[i]);
           }
+          key_data_ptr = key_data.data();
         }
 
-        // Simply call the Rust function that handles the complete logic
-        auto result = tor::start_tor_if_not_running(
-            rust::Str(params.data_dir), key_data, has_key, static_cast<uint16_t>(params.socks_port),
-            static_cast<uint16_t>(params.target_port), static_cast<uint64_t>(params.timeout_ms));
+        // Call the Rust function
+        auto result = tor::start_tor_if_not_running(params.data_dir.c_str(), key_data_ptr, has_key,
+                                                    static_cast<uint16_t>(params.socks_port),
+                                                    static_cast<uint16_t>(params.target_port),
+                                                    static_cast<uint64_t>(params.timeout_ms));
 
-        return StartTorResponse(result.is_success, std::string(result.onion_address.c_str()),
-                                std::string(result.control.c_str()),
-                                std::string(result.error_message.c_str()));
+        // Create our response object and copy the strings
+        std::string onion_address = result.onion_address ? result.onion_address : "";
+        std::string control = result.control ? result.control : "";
+        std::string error_message = result.error_message ? result.error_message : "";
+
+        // Important: Free the C strings to avoid memory leaks
+        if (result.onion_address)
+          tor::free_string(result.onion_address);
+        if (result.control)
+          tor::free_string(result.control);
+        if (result.error_message)
+          tor::free_string(result.error_message);
+
+        return StartTorResponse(result.is_success, onion_address, control, error_message);
       });
     }
 
@@ -74,7 +105,7 @@ namespace margelo::nitro::nitrotor {
 
     std::shared_ptr<Promise<bool>> deleteHiddenService(const std::string &onionAddress) override {
       return Promise<bool>::async(
-          [onionAddress]() { return tor::delete_hidden_service(rust::Str(onionAddress)); });
+          [onionAddress]() { return tor::delete_hidden_service(onionAddress.c_str()); });
     }
 
     std::shared_ptr<Promise<bool>> shutdownService() override {

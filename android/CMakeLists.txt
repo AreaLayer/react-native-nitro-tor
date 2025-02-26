@@ -10,10 +10,10 @@ set(ANDROID_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(LIBS_DIR "${ANDROID_DIR}/src/main/jniLibs/${ANDROID_ABI}")
 
 # Check for required files
-set(TOR_LIB "${LIBS_DIR}/libtor.a")
+set(TOR_LIB "${LIBS_DIR}/libtor.so")
 
 if(NOT EXISTS "${TOR_LIB}")
-    message(FATAL_ERROR "libtor.a not found at: ${TOR_LIB}")
+    message(FATAL_ERROR "libtor.so not found at: ${TOR_LIB}")
 endif()
 
 message(STATUS "Using libraries from: ${LIBS_DIR}")
@@ -21,7 +21,6 @@ message(STATUS "Using libraries from: ${LIBS_DIR}")
 # Create the main library
 add_library(${PROJECT_NAME}
     SHARED
-    ${CPP_DIR}/lib.rs.cc
     ${CPP_DIR}/glob_impl.cpp
     ${ANDROID_DIR}/src/main/cpp/cpp-adapter.cpp
 )
@@ -36,6 +35,7 @@ target_include_directories(${PROJECT_NAME}
 
 # Find Android log library
 find_library(LOG_LIB log)
+find_library(DL_LIB dl)
 
 # Create imported targets for external libraries
 add_library(tor_lib SHARED IMPORTED)
@@ -43,6 +43,9 @@ set_target_properties(tor_lib PROPERTIES
     IMPORTED_LOCATION "${TOR_LIB}"
     IMPORTED_NO_SONAME TRUE
 )
+
+# This might help with loading dependencies correctly
+add_dependencies(${PROJECT_NAME} tor_lib)
 
 # Additional compiler flags
 target_compile_options(${PROJECT_NAME}
@@ -54,12 +57,13 @@ target_compile_options(${PROJECT_NAME}
 # Include autolinking
 include(${CMAKE_SOURCE_DIR}/../nitrogen/generated/android/NitroTor+autolinking.cmake)
 
+find_library(LOG_LIB log)
+
 # Add our additional libraries after autolinking
 target_link_libraries(
     ${PROJECT_NAME}
+    tor_lib  # Use the imported library target instead of direct path
     ${LOG_LIB}
-    # ${CXXBRIDGE_LIB}
-    ${TOR_LIB}
     dl
     m
     android
