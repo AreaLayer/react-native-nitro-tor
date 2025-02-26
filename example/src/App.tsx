@@ -44,6 +44,8 @@ export default function TorApp() {
 
         console.log(result);
 
+        console.log('Tor service status', await RnTor.getServiceStatus());
+
         setTorState({
           isSuccess: result.is_success,
           errorMessage: result.error_message,

@@ -63,6 +63,12 @@ const startTor = async () => {
     console.error('Error starting Tor:', error);
   }
 };
+
+// Shut down the Tor service
+const shutdown = async () => {
+  const result = await RnTor.shutdownService();
+  console.log(`Tor shutdown ${result ? 'successful' : 'failed'}`);
+};
 ```
 
 ### Advanced Usage
@@ -87,8 +93,8 @@ const initTor = async () => {
 // Create a hidden service
 const createService = async () => {
   const serviceResult = await RnTor.createHiddenService({
-    port: 80,
-    target_port: 8080,
+    port: 9055,
+    target_port: 9056,
     // Optionally provide key_data for persistent services
   });
 
@@ -96,6 +102,11 @@ const createService = async () => {
     console.log(`Created hidden service at: ${serviceResult.onion_address}`);
   }
 };
+
+// Get the current status of the Tor service.
+// 0: Tor is in the process of starting.
+// 1: Tor is running.
+// 2: Stopped/Not running/error.
 
 // Check service status
 const checkStatus = async () => {
@@ -164,6 +175,9 @@ interface HiddenServiceResponse {
 
 - `getServiceStatus(): Promise<number>`  
   Get the current status of the Tor service.
+  `0`: Tor is in the process of starting.
+  `1`: Tor is running.
+  `2`: Stopped/Not running/error.
 
 - `deleteHiddenService(onionAddress: string): Promise<boolean>`  
   Delete an existing hidden service by its onion address.
