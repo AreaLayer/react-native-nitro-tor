@@ -21,7 +21,6 @@ message(STATUS "Using libraries from: ${LIBS_DIR}")
 # Create the main library
 add_library(${PROJECT_NAME}
     SHARED
-    ${CPP_DIR}/lib.rs.cc
     ${CPP_DIR}/glob_impl.cpp
     ${ANDROID_DIR}/src/main/cpp/cpp-adapter.cpp
 )
