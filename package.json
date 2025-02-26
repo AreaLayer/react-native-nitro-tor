@@ -143,6 +143,21 @@
       ]
     }
   },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "subject-empty": [
+        0,
+        "never"
+      ],
+      "type-empty": [
+        0,
+        "never"
+      ]
+    }
+  },
   "eslintIgnore": [
     "node_modules/",
     "lib/"
