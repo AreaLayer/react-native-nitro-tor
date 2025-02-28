@@ -114,7 +114,7 @@ export default function TorApp() {
       const result = await RnTor.httpGet({
         headers: '',
         timeout_ms: 2000,
-        url: 'http://example.com',
+        url: 'https://httpbin.org/get',
       });
       console.log('httpGet result', result);
       setGetResult({
