@@ -111,5 +111,40 @@ namespace margelo::nitro::nitrotor {
     std::shared_ptr<Promise<bool>> shutdownService() override {
       return Promise<bool>::async([]() { return tor::shutdown_service(); });
     }
+
+    std::shared_ptr<Promise<HttpResponse>> httpGet(const HttpGetParams &params) override {
+      return Promise<HttpResponse>::async([params]() {
+        auto result = tor::http_get(params.url.c_str(), params.headers.c_str(), params.timeout_ms);
+
+        return HttpResponse(result.status_code, result.body, result.error);
+      });
+    }
+
+    std::shared_ptr<Promise<HttpResponse>> httpPost(const HttpPostParams &params) override {
+      return Promise<HttpResponse>::async([params]() {
+        auto result = tor::http_post(params.url.c_str(), params.body.c_str(),
+                                     params.headers.c_str(), params.timeout_ms);
+
+        return HttpResponse(result.status_code, result.body, result.error);
+      });
+    }
+
+    std::shared_ptr<Promise<HttpResponse>> httpPut(const HttpPutParams &params) override {
+      return Promise<HttpResponse>::async([params]() {
+        auto result = tor::http_put(params.url.c_str(), params.body.c_str(), params.headers.c_str(),
+                                    params.timeout_ms);
+
+        return HttpResponse(result.status_code, result.body, result.error);
+      });
+    }
+
+    std::shared_ptr<Promise<HttpResponse>> httpDelete(const HttpDeleteParams &params) override {
+      return Promise<HttpResponse>::async([params]() {
+        auto result =
+            tor::http_delete(params.url.c_str(), params.headers.c_str(), params.timeout_ms);
+
+        return HttpResponse(result.status_code, result.body, result.error);
+      });
+    }
   };
 } // namespace margelo::nitro::nitrotor

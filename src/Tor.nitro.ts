@@ -36,6 +36,38 @@ export interface HiddenServiceResponse {
   control: string;
 }
 
+export interface HttpGetParams {
+  url: string;
+  headers: string;
+  timeout_ms: number;
+}
+
+export interface HttpPostParams {
+  url: string;
+  body: string;
+  headers: string;
+  timeout_ms: number;
+}
+
+export interface HttpPutParams {
+  url: string;
+  body: string;
+  headers: string;
+  timeout_ms: number;
+}
+
+export interface HttpDeleteParams {
+  url: string;
+  headers: string;
+  timeout_ms: number;
+}
+
+export interface HttpResponse {
+  status_code: number;
+  body: string;
+  error: string;
+}
+
 export interface Tor extends HybridObject<{ ios: 'c++'; android: 'c++' }> {
   // Initialize the Tor service
   initTorService(config: TorConfig): Promise<boolean>;
@@ -56,4 +88,16 @@ export interface Tor extends HybridObject<{ ios: 'c++'; android: 'c++' }> {
 
   // Shutdown the Tor service
   shutdownService(): Promise<boolean>;
+
+  // Http GET
+  httpGet(params: HttpGetParams): Promise<HttpResponse>;
+
+  // Http POST
+  httpPost(params: HttpPostParams): Promise<HttpResponse>;
+
+  // Http PUT
+  httpPut(params: HttpPutParams): Promise<HttpResponse>;
+
+  // Http Delete
+  httpDelete(params: HttpDeleteParams): Promise<HttpResponse>;
 }

@@ -6,6 +6,7 @@ A Tor Daemon and Onion Routing Client for React Native using pure C++ [NitroModu
 
 - Run a Tor daemon directly in your React Native application
 - Create and manage Tor hidden services
+- Make HTTP requests over the Tor network (GET, POST, PUT, DELETE)
 - Built with performance in mind using React Native's NitroModules
 - Cross-platform support for Android, iOS and macOS
 
@@ -68,6 +69,86 @@ const startTor = async () => {
 const shutdown = async () => {
   const result = await RnTor.shutdownService();
   console.log(`Tor shutdown ${result ? 'successful' : 'failed'}`);
+};
+```
+
+### HTTP Methods Over Tor
+
+```typescript
+import { RnTor } from 'react-native-nitro-tor';
+
+// Make an HTTP GET request through Tor
+const makeGetRequest = async () => {
+  try {
+    const result = await RnTor.httpGet({
+      url: 'http://example.com',
+      headers: '',
+      timeout_ms: 2000,
+    });
+    console.log(`Status code: ${result.status_code}`);
+    console.log(`Response body: ${result.body}`);
+    if (result.error) {
+      console.error(`Error: ${result.error}`);
+    }
+  } catch (error) {
+    console.error('Error making GET request:', error);
+  }
+};
+
+// Make an HTTP POST request through Tor
+const makePostRequest = async () => {
+  try {
+    const result = await RnTor.httpPost({
+      url: 'http://httpbin.org/post',
+      body: '{"test":"data"}',
+      headers: '{"Content-Type":"application/json"}',
+      timeout_ms: 2000,
+    });
+    console.log(`Status code: ${result.status_code}`);
+    console.log(`Response body: ${result.body}`);
+    if (result.error) {
+      console.error(`Error: ${result.error}`);
+    }
+  } catch (error) {
+    console.error('Error making POST request:', error);
+  }
+};
+
+// Make an HTTP PUT request through Tor
+const makePutRequest = async () => {
+  try {
+    const result = await RnTor.httpPut({
+      url: 'http://httpbin.org/put',
+      body: '{"updated":"value"}',
+      headers: '{"Content-Type":"application/json"}',
+      timeout_ms: 2000,
+    });
+    console.log(`Status code: ${result.status_code}`);
+    console.log(`Response body: ${result.body}`);
+    if (result.error) {
+      console.error(`Error: ${result.error}`);
+    }
+  } catch (error) {
+    console.error('Error making PUT request:', error);
+  }
+};
+
+// Make an HTTP DELETE request through Tor
+const makeDeleteRequest = async () => {
+  try {
+    const result = await RnTor.httpDelete({
+      url: 'http://httpbin.org/delete',
+      headers: '{"Content-Type":"application/json"}',
+      timeout_ms: 2000,
+    });
+    console.log(`Status code: ${result.status_code}`);
+    console.log(`Response body: ${result.body}`);
+    if (result.error) {
+      console.error(`Error: ${result.error}`);
+    }
+  } catch (error) {
+    console.error('Error making DELETE request:', error);
+  }
 };
 ```
 
@@ -160,6 +241,38 @@ interface HiddenServiceResponse {
   onion_address: string;
   control: string;
 }
+
+interface HttpGetParams {
+  url: string;
+  headers: string;
+  timeout_ms: number;
+}
+
+interface HttpPostParams {
+  url: string;
+  body: string;
+  headers: string;
+  timeout_ms: number;
+}
+
+interface HttpPutParams {
+  url: string;
+  body: string;
+  headers: string;
+  timeout_ms: number;
+}
+
+interface HttpDeleteParams {
+  url: string;
+  headers: string;
+  timeout_ms: number;
+}
+
+interface HttpResponse {
+  status_code: number;
+  body: string;
+  error: string;
+}
 ```
 
 ### Methods
@@ -184,6 +297,18 @@ interface HiddenServiceResponse {
 
 - `shutdownService(): Promise<boolean>`  
   Completely shut down the Tor service.
+
+- `httpGet(params: HttpGetParams): Promise<HttpResponse>`  
+  Make an HTTP GET request through the Tor network.
+
+- `httpPost(params: HttpPostParams): Promise<HttpResponse>`  
+  Make an HTTP POST request through the Tor network.
+
+- `httpPut(params: HttpPutParams): Promise<HttpResponse>`  
+  Make an HTTP PUT request through the Tor network.
+
+- `httpDelete(params: HttpDeleteParams): Promise<HttpResponse>`  
+  Make an HTTP DELETE request through the Tor network.
 
 ## Binary Files
 
