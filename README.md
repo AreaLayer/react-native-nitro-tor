@@ -45,23 +45,19 @@ import { RnTor } from 'react-native-nitro-tor';
 
 // Start Tor with a hidden service
 const startTor = async () => {
-  try {
-    const result = await RnTor.startTorIfNotRunning({
-      data_dir: '/path/to/tor/data',
-      socks_port: 9050,
-      target_port: 8080,
-      timeout_ms: 60000,
-    });
+  const result = await RnTor.startTorIfNotRunning({
+    data_dir: '/path/to/tor/data',
+    socks_port: 9050,
+    target_port: 8080,
+    timeout_ms: 60000,
+  });
 
-    if (result.is_success) {
-      console.log(`Tor started successfully!`);
-      console.log(`Onion address: ${result.onion_address}`);
-      console.log(`Control: ${result.control}`);
-    } else {
-      console.error(`Failed to start Tor: ${result.error_message}`);
-    }
-  } catch (error) {
-    console.error('Error starting Tor:', error);
+  if (result.is_success) {
+    console.log(`Tor started successfully!`);
+    console.log(`Onion address: ${result.onion_address}`);
+    console.log(`Control: ${result.control}`);
+  } else {
+    console.error(`Failed to start Tor: ${result.error_message}`);
   }
 };
 
@@ -79,75 +75,59 @@ import { RnTor } from 'react-native-nitro-tor';
 
 // Make an HTTP GET request through Tor
 const makeGetRequest = async () => {
-  try {
-    const result = await RnTor.httpGet({
-      url: 'http://example.com',
-      headers: '',
-      timeout_ms: 2000,
-    });
-    console.log(`Status code: ${result.status_code}`);
-    console.log(`Response body: ${result.body}`);
-    if (result.error) {
-      console.error(`Error: ${result.error}`);
-    }
-  } catch (error) {
-    console.error('Error making GET request:', error);
+  const result = await RnTor.httpGet({
+    url: 'http://example.com',
+    headers: '',
+    timeout_ms: 2000,
+  });
+  console.log(`Status code: ${result.status_code}`);
+  console.log(`Response body: ${result.body}`);
+  if (result.error) {
+    console.error(`Error: ${result.error}`);
   }
 };
 
 // Make an HTTP POST request through Tor
 const makePostRequest = async () => {
-  try {
-    const result = await RnTor.httpPost({
-      url: 'http://httpbin.org/post',
-      body: '{"test":"data"}',
-      headers: '{"Content-Type":"application/json"}',
-      timeout_ms: 2000,
-    });
-    console.log(`Status code: ${result.status_code}`);
-    console.log(`Response body: ${result.body}`);
-    if (result.error) {
-      console.error(`Error: ${result.error}`);
-    }
-  } catch (error) {
-    console.error('Error making POST request:', error);
+  const result = await RnTor.httpPost({
+    url: 'http://httpbin.org/post',
+    body: '{"test":"data"}',
+    headers: '{"Content-Type":"application/json"}',
+    timeout_ms: 2000,
+  });
+  console.log(`Status code: ${result.status_code}`);
+  console.log(`Response body: ${result.body}`);
+  if (result.error) {
+    console.error(`Error: ${result.error}`);
   }
 };
 
 // Make an HTTP PUT request through Tor
 const makePutRequest = async () => {
-  try {
-    const result = await RnTor.httpPut({
-      url: 'http://httpbin.org/put',
-      body: '{"updated":"value"}',
-      headers: '{"Content-Type":"application/json"}',
-      timeout_ms: 2000,
-    });
-    console.log(`Status code: ${result.status_code}`);
-    console.log(`Response body: ${result.body}`);
-    if (result.error) {
-      console.error(`Error: ${result.error}`);
-    }
-  } catch (error) {
-    console.error('Error making PUT request:', error);
+  const result = await RnTor.httpPut({
+    url: 'http://httpbin.org/put',
+    body: '{"updated":"value"}',
+    headers: '{"Content-Type":"application/json"}',
+    timeout_ms: 2000,
+  });
+  console.log(`Status code: ${result.status_code}`);
+  console.log(`Response body: ${result.body}`);
+  if (result.error) {
+    console.error(`Error: ${result.error}`);
   }
 };
 
 // Make an HTTP DELETE request through Tor
 const makeDeleteRequest = async () => {
-  try {
-    const result = await RnTor.httpDelete({
-      url: 'http://httpbin.org/delete',
-      headers: '{"Content-Type":"application/json"}',
-      timeout_ms: 2000,
-    });
-    console.log(`Status code: ${result.status_code}`);
-    console.log(`Response body: ${result.body}`);
-    if (result.error) {
-      console.error(`Error: ${result.error}`);
-    }
-  } catch (error) {
-    console.error('Error making DELETE request:', error);
+  const result = await RnTor.httpDelete({
+    url: 'http://httpbin.org/delete',
+    headers: '{"Content-Type":"application/json"}',
+    timeout_ms: 2000,
+  });
+  console.log(`Status code: ${result.status_code}`);
+  console.log(`Response body: ${result.body}`);
+  if (result.error) {
+    console.error(`Error: ${result.error}`);
   }
 };
 ```
@@ -156,6 +136,7 @@ const makeDeleteRequest = async () => {
 
 ```typescript
 import { RnTor } from 'react-native-nitro-tor';
+
 // Initialize Tor service
 const initTor = async () => {
   const initialized = await RnTor.initTorService({
@@ -277,37 +258,37 @@ interface HttpResponse {
 
 ### Methods
 
-- `initTorService(config: TorConfig): Promise<boolean>`  
+- `initTorService(config: TorConfig): Promise<boolean>`
   Initialize the Tor service with the given configuration.
 
-- `createHiddenService(params: HiddenServiceParams): Promise<HiddenServiceResponse>`  
+- `createHiddenService(params: HiddenServiceParams): Promise<HiddenServiceResponse>`
   Create a new Tor hidden service with the specified parameters.
 
-- `startTorIfNotRunning(params: StartTorParams): Promise<StartTorResponse>`  
+- `startTorIfNotRunning(params: StartTorParams): Promise<StartTorResponse>`
   Start the Tor daemon with a hidden service if it's not already running. This is the recommended method for most use cases.
 
-- `getServiceStatus(): Promise<number>`  
+- `getServiceStatus(): Promise<number>`
   Get the current status of the Tor service.
   `0`: Tor is in the process of starting.
   `1`: Tor is running.
   `2`: Stopped/Not running/error.
 
-- `deleteHiddenService(onionAddress: string): Promise<boolean>`  
+- `deleteHiddenService(onionAddress: string): Promise<boolean>`
   Delete an existing hidden service by its onion address.
 
-- `shutdownService(): Promise<boolean>`  
+- `shutdownService(): Promise<boolean>`
   Completely shut down the Tor service.
 
-- `httpGet(params: HttpGetParams): Promise<HttpResponse>`  
+- `httpGet(params: HttpGetParams): Promise<HttpResponse>`
   Make an HTTP GET request through the Tor network.
 
-- `httpPost(params: HttpPostParams): Promise<HttpResponse>`  
+- `httpPost(params: HttpPostParams): Promise<HttpResponse>`
   Make an HTTP POST request through the Tor network.
 
-- `httpPut(params: HttpPutParams): Promise<HttpResponse>`  
+- `httpPut(params: HttpPutParams): Promise<HttpResponse>`
   Make an HTTP PUT request through the Tor network.
 
-- `httpDelete(params: HttpDeleteParams): Promise<HttpResponse>`  
+- `httpDelete(params: HttpDeleteParams): Promise<HttpResponse>`
   Make an HTTP DELETE request through the Tor network.
 
 ## Binary Files
