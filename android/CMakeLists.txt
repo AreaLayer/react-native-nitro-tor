@@ -10,10 +10,10 @@ set(ANDROID_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(LIBS_DIR "${ANDROID_DIR}/src/main/jniLibs/${ANDROID_ABI}")
 
 # Check for required files
-set(TOR_LIB "${LIBS_DIR}/libtor.a")
+set(TOR_LIB "${LIBS_DIR}/libtor_ffi.a")
 
 if(NOT EXISTS "${TOR_LIB}")
-    message(FATAL_ERROR "libtor.a not found at: ${TOR_LIB}")
+    message(FATAL_ERROR "libtor_ffi.a not found at: ${TOR_LIB}")
 endif()
 
 message(STATUS "Using libraries from: ${LIBS_DIR}")
