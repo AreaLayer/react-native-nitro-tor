@@ -113,7 +113,7 @@ export default function TorApp() {
     try {
       const result = await RnTor.httpGet({
         headers: '',
-        timeout_ms: 2000,
+        timeout_ms: 20000,
         url: 'https://httpbin.org/get',
       });
       console.log('httpGet result', result);
@@ -138,7 +138,7 @@ export default function TorApp() {
         url: 'http://httpbin.org/post',
         body: '{"test":"data"}',
         headers: '{"Content-Type":"application/json"}',
-        timeout_ms: 2000,
+        timeout_ms: 20000,
       });
       console.log('http post result', result);
       setPostResult({
@@ -162,7 +162,7 @@ export default function TorApp() {
         url: 'http://httpbin.org/put',
         body: '{"updated":"value"}',
         headers: '{"Content-Type":"application/json"}',
-        timeout_ms: 2000,
+        timeout_ms: 20000,
       });
       console.log('http put result', result);
       setPutResult({
@@ -185,7 +185,7 @@ export default function TorApp() {
       const result = await RnTor.httpDelete({
         url: 'http://httpbin.org/delete',
         headers: '{"Content-Type":"application/json"}',
-        timeout_ms: 2000,
+        timeout_ms: 20000,
       });
       console.log('http delete result', result);
       setDeleteResult({
